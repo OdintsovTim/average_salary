@@ -30,11 +30,11 @@ def predict_rub_salary_hh(lang):
     }
     
     while params['page'] <= pages_number:
-        response = requests.get(url, params=params)
+        response = requests.get(url, params=params).json()
         params['page'] += 1
-        pages_number = response.json()['pages']
+        pages_number = response['pages']
         
-        for vacancy in response.json()['items']:
+        for vacancy in response['items']:
             if vacancy['salary']['currency'] == 'RUR':
                 count_vacancies += 1
                 if vacancy['salary']['to'] is None:
