@@ -2,6 +2,9 @@ import json
 
 import requests
 
+from count_salary import count_avarage_salary
+
+
 def count_vacancies_hh(lang):
     url = 'https://api.hh.ru/vacancies'
     params = {
@@ -18,7 +21,7 @@ def count_vacancies_hh(lang):
 
 def predict_rub_salary_hh(lang):
     url = 'https://api.hh.ru/vacancies'
-    count_vacancies = 0
+    vacancies_processed = 0
     sum_salary = 0
     pages_number = 0
     params = {
@@ -34,17 +37,10 @@ def predict_rub_salary_hh(lang):
         params['page'] += 1
         pages_number = response['pages']
         
-        for vacancy in response['items']:
-            if vacancy['salary']['currency'] == 'RUR':
-                count_vacancies += 1
-                if not vacancy['salary']['to']:
-                    sum_salary += int(vacancy['salary']['from'] * 1.2)
-                elif not vacancy['salary']['from']:
-                    sum_salary += int(vacancy['salary']['to'] * 0.8)
-                else:
-                    sum_salary += int(vacancy['salary']['from'] + int(vacancy['salary']['to']) / 2)
+        vacancies_processed, sum_salary = count_avarage_salary(response, 'hh', vacancies_processed, sum_salary)
+
         
     return {
-        'vacancies_processed' :  count_vacancies,
-        'average_salary' : sum_salary // count_vacancies
+        'vacancies_processed' :  vacancies_processed,
+        'average_salary' : sum_salary // vacancies_processed
     }
