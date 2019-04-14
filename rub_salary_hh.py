@@ -37,9 +37,9 @@ def predict_rub_salary_hh(lang):
         for vacancy in response['items']:
             if vacancy['salary']['currency'] == 'RUR':
                 count_vacancies += 1
-                if vacancy['salary']['to'] is None:
+                if not vacancy['salary']['to']:
                     sum_salary += int(vacancy['salary']['from'] * 1.2)
-                elif vacancy['salary']['from'] is None:
+                elif not vacancy['salary']['from']:
                     sum_salary += int(vacancy['salary']['to'] * 0.8)
                 else:
                     sum_salary += int(vacancy['salary']['from'] + int(vacancy['salary']['to']) / 2)

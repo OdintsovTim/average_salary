@@ -26,9 +26,9 @@ def predict_rub_salary_job(lang, TOKEN):
         for vacancy in response['objects']:
             if vacancy['currency'] == 'rub':
                 vacancies_processed += 1
-                if vacancy['payment_from'] == 0:
+                if not vacancy['payment_from']:
                     sum_salary += int(vacancy['payment_to'] * 0.8)
-                elif vacancy['payment_to'] == 0:
+                elif not vacancy['payment_to']:
                     sum_salary += int(vacancy['payment_from'] * 1.2)
                 else:
                     sum_salary += int((vacancy['payment_from'] + vacancy['payment_to']) / 2)

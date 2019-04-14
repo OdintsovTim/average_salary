@@ -29,6 +29,12 @@ def make_table_data(langs_info_dict, table_name):
     return table.table
 
 
+def count_avarage_salary(response):
+    pass
+        
+    
+
+
 def main():
 
     parser = argparse.ArgumentParser(description='This program displays data on average salaries for popular programming languages from hh.ru and job.ry')
