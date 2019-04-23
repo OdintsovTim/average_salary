@@ -22,8 +22,7 @@ def predict_rub_salary_job(lang, TOKEN):
     while more_page:
         response = requests.get(url, headers=headers, params=params).json()
         more_page = response['more']
-        if more_page:
-            params['page'] += 1
+        params['page'] += 1
 
         vacancies_processed, sum_salary = count_avarage_salary(response, 'job', vacancies_processed, sum_salary)
     
