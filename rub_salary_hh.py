@@ -8,7 +8,7 @@ from count_salary import count_avarage_salary
 def count_vacancies_hh(lang):
     url = 'https://api.hh.ru/vacancies'
     params = {
-        'text' : 'Программист' + ' ' + lang,
+        'text' : f'программист {lang}',
         'area' : 1,
         'period' : 30
     }
@@ -25,7 +25,7 @@ def predict_rub_salary_hh(lang):
     sum_salary = 0
     pages_number = 0
     params = {
-        'text' : 'Программист' + ' ' + lang,
+        'text' : f'программист {lang}',
         'area' : 1,
         'period' : 30,
         'only_with_salary' : 'True',
