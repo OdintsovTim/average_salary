@@ -41,7 +41,7 @@ def main():
 
     for lang in prog_langs:
         langs_info_hh[lang] = {}
-        langs_info_hh[lang].update(count_vacancies_hh(lang, moscow_id))
+        langs_info_hh[lang]['vacancies_found'] = count_vacancies_hh(lang, moscow_id)
         langs_info_hh[lang].update(predict_rub_salary_hh(lang, moscow_id))
 
     print(make_table_data(langs_info_hh, 'HeadHunter Moscow'))

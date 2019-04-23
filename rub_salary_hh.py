@@ -15,9 +15,7 @@ def count_vacancies_hh(lang, moscow_id):
 
     response = requests.get(url, params=params).json()
     count = response['found']
-    return {
-        'vacancies_found' : count
-    }
+    return count
 
 def predict_rub_salary_hh(lang, moscow_id):
     url = 'https://api.hh.ru/vacancies'
