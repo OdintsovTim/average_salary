@@ -7,7 +7,7 @@ from count_salary import count_avarage_salary
 
 def predict_rub_salary_job(lang, TOKEN):
     url = 'https://api.superjob.ru/2.0/vacancies/'
-    next_page = True
+    more_page = True
     sum_salary = 0
     vacancies_processed = 1
     params = {
@@ -19,10 +19,10 @@ def predict_rub_salary_job(lang, TOKEN):
         'X-Api-App-Id': TOKEN
     }
     
-    while next_page == True:
+    while more_page:
         response = requests.get(url, headers=headers, params=params).json()
-        next_page = response['more']
-        if next_page:
+        more_page = response['more']
+        if more_page:
             params['page'] += 1
 
         vacancies_processed, sum_salary = count_avarage_salary(response, 'job', vacancies_processed, sum_salary)

@@ -8,7 +8,7 @@ from rub_salary_job import predict_rub_salary_job
 prog_langs = ['Python', 'JavaScript', 'Java', 'PHP', 'C++', 'C#', 'C', 'Go', 'Objective-C', 'Scala', 'Swift']
 moscow_id = 1
 
-def make_table_data(langs_info_dict, table_name):
+def make_table(langs_info_dict, table_name):
     table_data_job = [[
         'Язык программирования',
         'Вакансий найдено',
@@ -44,13 +44,13 @@ def main():
         langs_info_hh[lang]['vacancies_found'] = count_vacancies_hh(lang, moscow_id)
         langs_info_hh[lang].update(predict_rub_salary_hh(lang, moscow_id))
 
-    print(make_table_data(langs_info_hh, 'HeadHunter Moscow'))
+    print(make_table(langs_info_hh, 'HeadHunter Moscow'))
 
     for lang in prog_langs:
         langs_info_job[lang] = {}
         langs_info_job[lang].update(predict_rub_salary_job(lang, TOKEN))
 
-    print(make_table_data(langs_info_job, 'SuperJob Moscow'))
+    print(make_table(langs_info_job, 'SuperJob Moscow'))
 
 
 if __name__ == "__main__":
