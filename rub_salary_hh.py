@@ -5,11 +5,11 @@ import requests
 from count_salary import count_avarage_salary
 
 
-def count_vacancies_hh(lang):
+def count_vacancies_hh(lang, moscow_id):
     url = 'https://api.hh.ru/vacancies'
     params = {
         'text' : f'программист {lang}',
-        'area' : 1,
+        'area' : moscow_id,
         'period' : 30
     }
 
@@ -19,14 +19,14 @@ def count_vacancies_hh(lang):
         'vacancies_found' : count
     }
 
-def predict_rub_salary_hh(lang):
+def predict_rub_salary_hh(lang, moscow_id):
     url = 'https://api.hh.ru/vacancies'
     vacancies_processed = 0
     sum_salary = 0
     pages_number = 0
     params = {
         'text' : f'программист {lang}',
-        'area' : 1,
+        'area' : moscow_id,
         'period' : 30,
         'only_with_salary' : 'True',
         'page' : 0
