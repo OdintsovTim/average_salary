@@ -32,9 +32,9 @@ def make_table(langs_info_dict, table_name):
 def main():
 
     parser = argparse.ArgumentParser(description='This program displays data on average salaries for popular programming languages from hh.ru and job.ry')
-    parser.add_argument('TOKEN')
+    parser.add_argument('token')
     args = parser.parse_args()
-    TOKEN = args.TOKEN
+    token = args.token
 
     langs_info_hh = {}
     langs_info_job = {}
@@ -48,7 +48,7 @@ def main():
 
     for lang in prog_langs:
         langs_info_job[lang] = {}
-        langs_info_job[lang].update(predict_rub_salary_job(lang, TOKEN))
+        langs_info_job[lang].update(predict_rub_salary_job(lang, token))
 
     print(make_table(langs_info_job, 'SuperJob Moscow'))
 
