@@ -21,7 +21,7 @@ def predict_rub_salary_hh(lang, moscow_id):
     url = 'https://api.hh.ru/vacancies'
     vacancies_processed = 0
     sum_salary = 0
-    pages_number = 0
+    pages_number = 1
     params = {
         'text' : f'программист {lang}',
         'area' : moscow_id,
@@ -30,7 +30,7 @@ def predict_rub_salary_hh(lang, moscow_id):
         'page' : 0
     }
     
-    while params['page'] <= pages_number:
+    while params['page'] < pages_number:
         response = requests.get(url, params=params).json()
         params['page'] += 1
         pages_number = response['pages']
