@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from count_salary import count_avarage_salary
+from count_salary import count_sum_salary_hh
 
 
 def count_vacancies_hh(lang, moscow_id):
@@ -35,7 +35,7 @@ def predict_rub_salary_hh(lang, moscow_id):
         params['page'] += 1
         pages_number = response['pages']
         
-        vacancies_processed, sum_salary = count_avarage_salary(response, 'hh', vacancies_processed, sum_salary)
+        vacancies_processed, sum_salary = count_sum_salary_hh(response, vacancies_processed, sum_salary)
 
         
     return {

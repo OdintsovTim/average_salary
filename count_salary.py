@@ -1,24 +1,29 @@
-def count_avarage_salary(response, site_name, vacancies_processed, sum_salary):
+def count_sum_salary_hh(response, vacancies_processed, sum_salary):
+    correct_response = []
     hh_params = {'from': 'from', 'to': 'to'}
-    job_params = {'from' : 'payment_from', 'to' : 'payment_to'}
-    if site_name == 'hh':
-        response = response['items']
-        current_params = hh_params
-    else:
-        response = response['objects']
-        current_params = job_params
-    
+    response = response['items']
     for vacancy in response:
-        if site_name == 'hh':
-            vacancy = vacancy['salary']
+        correct_response.append(vacancy['salary'])
 
+    return count_sum_salary(correct_response, hh_params, vacancies_processed, sum_salary)
+
+
+def count_sum_salary_job(response, vacancies_processed, sum_salary):
+    job_params = {'from' : 'payment_from', 'to' : 'payment_to'}
+    response = response['objects']
+
+    return count_sum_salary(response, job_params, vacancies_processed, sum_salary)
+
+
+def count_sum_salary(response, site_params, vacancies_processed, sum_salary):
+    for vacancy in response:
         if vacancy['currency'] == 'RUR' or vacancy['currency'] == 'rub':
-            vacancies_processed += 1
-            if not vacancy[current_params['from']]:
-                sum_salary += int(vacancy[current_params['to']] * 0.8)
-            elif not vacancy[current_params['to']]:
-                sum_salary += int(vacancy[current_params['from']] * 1.2)
-            else:
-                sum_salary += int((vacancy[current_params['from']] + vacancy[current_params['to']]) / 2)
-
+                vacancies_processed += 1
+                if not vacancy[site_params['from']]:
+                    sum_salary += int(vacancy[site_params['to']] * 0.8)
+                elif not vacancy[site_params['to']]:
+                    sum_salary += int(vacancy[site_params['from']] * 1.2)
+                else:
+                    sum_salary += int((vacancy[site_params['from']] + vacancy[site_params['to']]) / 2)
+    
     return vacancies_processed, sum_salary

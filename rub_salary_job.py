@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from count_salary import count_avarage_salary
+from count_salary import count_sum_salary_job
 
 
 def predict_rub_salary_job(lang, TOKEN):
@@ -24,7 +24,7 @@ def predict_rub_salary_job(lang, TOKEN):
         more_page = response['more']
         params['page'] += 1
 
-        vacancies_processed, sum_salary = count_avarage_salary(response, 'job', vacancies_processed, sum_salary)
+        vacancies_processed, sum_salary = count_sum_salary_job(response, vacancies_processed, sum_salary)
     
     vacancies_found = response['total']
     return {
