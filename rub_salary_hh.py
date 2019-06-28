@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from count_salary import count_sum_salary_hh
+from count_salary import predict_salary
 
 
 def count_vacancies_hh(lang, moscow_id):
@@ -17,10 +17,9 @@ def count_vacancies_hh(lang, moscow_id):
     count = response['found']
     return count
 
-def predict_rub_salary_hh(lang, moscow_id):
+def get_salaries_total_for_hh(lang, moscow_id):
     url = 'https://api.hh.ru/vacancies'
-    vacancies_processed = 0
-    sum_salary = 0
+    all_salaries = []
     pages_number = 1
     params = {
         'text' : f'программист {lang}',
@@ -35,10 +34,17 @@ def predict_rub_salary_hh(lang, moscow_id):
         params['page'] += 1
         pages_number = response['pages']
         
-        vacancies_processed, sum_salary = count_sum_salary_hh(response, vacancies_processed, sum_salary)
+        all_salaries += get_salaries_for_hh(response)
 
         
     return {
-        'vacancies_processed' :  vacancies_processed,
-        'average_salary' : sum_salary // vacancies_processed
+        'vacancies_processed' :  len(all_salaries),
+        'average_salary' : sum(all_salaries) // len(all_salaries)
     }
+
+
+def get_salaries_for_hh(response):
+    salaries = [predict_salary(vacancy['salary']['from'], vacancy['salary']['to'], vacancy['salary']['currency']) for vacancy in response['items']]
+    filtered_salaries = [salary for salary in salaries if salary is not None]
+    
+    return filtered_salaries
